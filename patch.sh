@@ -5,8 +5,7 @@
 #功能：所有的patch文件都会放到一个目录中保存。
 #功能：保存所有patch的文件夹在$2目录中被创建。
 
-#@param1  $1  [branch | commit]				需要对比的提交或分支
-#@param2  $2  [dir]										需要对比patch的目标目录
+#example : patch.sh HEAD ./project/DIR
 
 #types
 TYPE=("c" "h" "uni" "dsc")
@@ -33,8 +32,8 @@ PATCH_DIR=${WORK_DIR##*/}_patch
 
 if [ -d "$PATCH_DIR" ]
 then
-	echo "Error: $PATCH_DIR exists!"
-	exit 1
+  echo "Error: $PATCH_DIR exists!"
+  exit 1
 fi
 mkdir $PATCH_DIR
 
@@ -57,8 +56,7 @@ do
       #remove ^M from patch.
       tr -d "\015" < $$.tmp.patch > ${PATCH_DIR}/${file}.patch
     fi
-
-		rm $$.tmp.patch
+    rm $$.tmp.patch
   done
 done
 
@@ -66,7 +64,7 @@ count=`ls $PATCH_DIR | grep patch`
 if [ "$count" == "" ]
 then
   rmdir $PATCH_DIR
-	rm -rf $PATCH_FILE
+  rm -rf $PATCH_FILE
   exit 1
 fi
 
